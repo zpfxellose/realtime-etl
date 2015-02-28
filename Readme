@@ -1,0 +1,62 @@
+Readme
+
+Run:
+	start the program with "sbt run"
+
+Change Configuration:
+	configuration can be changed in real time in ./conf/conf_example.xml
+
+Program Flow:
+	./scripts/extract.sh is executed by cron, every minute. The extraction result is stored in ./data/extract
+	The etl program will detect if any file in extract folder has newer timestamp than in ./data/transform. If a file has newer timestamp, it will be "transformed", according to conf_example.xml
+	Then the same is done from transform data folder to load data folder
+
+Folders:
+./conf
+	Configuration setup file. Only "conf_example.xml" is the valid setup file
+
+./data
+	The data folder.
+
+./data/extract
+	The extract data folder. It contains all extracted data from source tables. Organized by database, table, year_month, day, time.
+	The extraction program is based on the latest record in the extract data folder to determine what to extract next.
+
+./data/transform
+	The transform data folder. It contains all transformed data. They should be exactly aligned to the result table in column order and format
+
+./data/load
+	The load data folder. It contains all load data flag. The load program will work based on latest load flag to determine what to load next
+
+./data/tmp
+	The temperary folder. It contains intermediate result between extract and transform. They will be clean on program startup and transformation finishes.
+
+./log
+	The log folder. Log files for each step is put here. Use the ./monitor.sh to check log in realtime.
+
+./scripts
+	The scripts folder. It contains all the python and shell scripts used by the main scala program. The scripts here are used when needed, so even if the scala program is running. The scripts here can be modified at will, and will be effective whenever saved.
+
+./scripts/extract.sh
+	The extract program in shell script. It is executed by cron. Use "crontab -e" to modify the execute schedule.
+
+./Env.scala
+	The scala program. For global utility and variable setup.
+
+./etl.scala
+	The scala program. The main function of the program
+
+./Load.scala
+	The scala program. The Load part
+
+./monitor.sh
+	Monitor log file. Run ./monitor.sh directly let you monitor logs with currect date
+
+./Processor.scala
+	The scala program. The base class of Load and Transform
+
+./Transform.scala
+	The scala program. The Transform class.
+
+
+

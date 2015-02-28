@@ -1,0 +1,13 @@
+ sudo apt-get install mysql-server-5.6 mysql-client-5.6
+
+ sudo vi /etc/mysql/my.cnf
+ bind-address            = 10.0.2.15
+
+ sudo reboot
+
+使用网易的apt-get源
+ http://zhoushijun.iteye.com/blog/1942475
+
+echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+sudo apt-get update
+sudo apt-get install sbt
